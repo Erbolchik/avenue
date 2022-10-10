@@ -1,2 +1,5 @@
-package kz.project.avenue.domain;public class Currency {
+package kz.project.avenue.domain;
+
+public enum Currency {
+    KZT,RUB,USD;
 }
