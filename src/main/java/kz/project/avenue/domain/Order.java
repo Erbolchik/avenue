@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;    
     private Long tableId;
     private Long waiterId;
     @Enumerated(EnumType.STRING)
