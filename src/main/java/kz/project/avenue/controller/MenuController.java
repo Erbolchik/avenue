@@ -1,7 +1,7 @@
 package kz.project.avenue.controller;
 
 import kz.project.avenue.json.MenuJson;
-import kz.project.avenue.service.MenuService;
+import kz.project.avenue.service.impl.MenuServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class MenuController {
 
     @Autowired
-    private MenuService menuService;
+    private MenuServiceImpl menuService;
 
 
     @GetMapping
@@ -24,19 +24,5 @@ public class MenuController {
     public void getMenu(@RequestParam(value = "id") Long id){
 
     }
-
-    @DeleteMapping("/{id}")
-    public void delete(@RequestParam(value = "id") Long id){
-
-    }
-
-    @PostMapping()
-    public void create(){
-
-    }
-
-
-
-
 
 }
