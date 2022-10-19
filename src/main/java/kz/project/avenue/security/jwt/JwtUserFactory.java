@@ -7,7 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class JwtUserFactory {
@@ -25,10 +27,10 @@ public final class JwtUserFactory {
                 user.getEmail(),
                 user.getStatus().equals(EntityStatus.ACTIVE),
                 user.getUpdated(),
-                mapToGrantedAuthorities(new ArrayList<>(user.getRoles())));
+                mapToGrantedAuthorities(new HashSet<>(user.getRoles())));
     }
 
-    private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> userRoles) {
+    private static List<GrantedAuthority> mapToGrantedAuthorities(Set<Role> userRoles) {
         return userRoles.stream().map(role ->
                         new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());

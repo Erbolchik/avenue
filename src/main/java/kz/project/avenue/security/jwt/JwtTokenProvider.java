@@ -14,10 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class JwtTokenProvider {
@@ -41,9 +38,11 @@ public class JwtTokenProvider {
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 
-    public String createToken(String username, List<Role> roleList) {
+    public String createToken(String username, Set<Role> roleList) {
+
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", getRoleNames(roleList));
+        claims.put("phoneNumber","7088787");
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + expiredInMilliseconds);
@@ -81,14 +80,14 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer_")) {
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
         return null;
     }
 
-    private List<String> getRoleNames(List<Role> userRoles) {
-        List<String> result = new ArrayList<>();
+    private Set<String> getRoleNames(Set<Role> userRoles) {
+        Set<String> result = new HashSet<>();
 
         userRoles.forEach(role -> {
             result.add(role.getName());

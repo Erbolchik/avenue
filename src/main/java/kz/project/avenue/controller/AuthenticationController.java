@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -44,7 +45,7 @@ public class AuthenticationController {
             if (user == null) {
                 throw new UsernameNotFoundException("User with username " + username + " not found");
             }
-            String token = jwtTokenProvider.createToken(username, user.getRoles());
+            String token = jwtTokenProvider.createToken(username, user.getRoles().stream().collect(Collectors.toSet()));
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);
             response.put("token", token);
