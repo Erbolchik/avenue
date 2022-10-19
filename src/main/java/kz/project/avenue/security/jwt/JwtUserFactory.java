@@ -6,6 +6,7 @@ import kz.project.avenue.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public final class JwtUserFactory {
                 user.getEmail(),
                 user.getStatus().equals(EntityStatus.ACTIVE),
                 user.getUpdated(),
-                null);
+                mapToGrantedAuthorities(new ArrayList<>(user.getRoles())));
     }
 
     private static List<GrantedAuthority> mapToGrantedAuthorities(List<Role> userRoles) {

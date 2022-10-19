@@ -11,14 +11,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
-    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    private static final String ADMIN_ENDPOINT = "api/v1/admin/**";
+    private static final String ADMIN_ENDPOINT = "api/admin/v1/**";
 
-    private static final String LOGIN_ENDPOINT = "api/v1/auth/**";
+    private static final String LOGIN_ENDPOINT = "/api/auth/v1/login";
+
+    @Autowired
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
     @Bean
     @Override
@@ -36,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
     }
