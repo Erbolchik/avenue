@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "food")
@@ -20,6 +21,7 @@ public class Food {
     private String name;
     private String description;
     private String category;
+    @Column(name = "subcategory")
     private String subCategory;
     @Enumerated(EnumType.STRING)
     @Column(length = 10)

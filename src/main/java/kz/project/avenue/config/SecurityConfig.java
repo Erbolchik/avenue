@@ -19,6 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
 
     private static final String LOGIN_ENDPOINT = "/api/auth/v1/login";
 
+    private static final String WEBOSCKET = "/ws/**";
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
@@ -39,10 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
                 .and()
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(WEBOSCKET).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
     }
-
 }

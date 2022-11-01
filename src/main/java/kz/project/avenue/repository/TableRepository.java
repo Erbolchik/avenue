@@ -1,10 +1,9 @@
 package kz.project.avenue.repository;
 
-import kz.project.avenue.domain.Menu;
+import kz.project.avenue.domain.CafeTable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MenuRepository extends JpaRepository<Menu, Long> {
-    Menu findByCafeId(Long cafeId);
+public interface TableRepository extends JpaRepository<CafeTable,Long> {
 }

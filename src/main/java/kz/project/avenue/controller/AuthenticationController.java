@@ -2,6 +2,7 @@ package kz.project.avenue.controller;
 
 import kz.project.avenue.domain.User;
 import kz.project.avenue.dto.AuthenticationRequestDto;
+import kz.project.avenue.dto.AuthenticationResponseDto;
 import kz.project.avenue.security.jwt.JwtTokenProvider;
 import kz.project.avenue.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class AuthenticationController {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<AuthenticationResponseDto> login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
@@ -46,9 +47,10 @@ public class AuthenticationController {
                 throw new UsernameNotFoundException("User with username " + username + " not found");
             }
             String token = jwtTokenProvider.createToken(username, user.getRoles().stream().collect(Collectors.toSet()));
-            Map<Object, Object> response = new HashMap<>();
-            response.put("username", username);
-            response.put("token", token);
+            AuthenticationResponseDto response = new AuthenticationResponseDto();
+            response.setUsername(username);
+            response.setAccessToken(token);
+            response.setRefreshToken("123");
 
             return ResponseEntity.ok(response);
 

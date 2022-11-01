@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "menu")
@@ -19,4 +20,11 @@ public class Menu {
     private String name;
     private String note;
     private Long cafeId;
+
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "menu_foods",
+            joinColumns = {@JoinColumn(name = "menu_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "food_id", referencedColumnName = "id")})
+    private List<Food> foodList;
 }

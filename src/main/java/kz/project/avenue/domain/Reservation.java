@@ -16,6 +16,7 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long cafeId;
     private Long tableId;
     private Long waiterId;
     @Enumerated(EnumType.STRING)

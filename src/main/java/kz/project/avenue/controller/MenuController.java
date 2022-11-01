@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController()
-@RequestMapping(value = "api/v1/menu")
+@RequestMapping(value = "api/menu/v1")
 public class MenuController {
 
     @Autowired
@@ -20,9 +20,9 @@ public class MenuController {
         return menuService.getMenuList();
     }
 
-    @GetMapping("/{id}")
-    public void getMenu(@RequestParam(value = "id") Long id){
-
+    @GetMapping("/{cafeId}")
+    public MenuJson getMenu(@PathVariable(value = "cafeId") Long cafeId) {
+        return menuService.getMenu(cafeId);
     }
 
 }

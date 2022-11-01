@@ -17,17 +17,17 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuRepository menuRepository;
 
-    public List<MenuJson> getMenuList(){
+    public List<MenuJson> getMenuList() {
         List<Menu> menuList = menuRepository.findAll();
         List<MenuJson> menuJsonList = new ArrayList<>();
-        BeanUtils.copyProperties(menuJsonList,menuList);
+        BeanUtils.copyProperties(menuJsonList, menuList);
         return menuJsonList;
     }
 
-    public MenuJson getMenu(Long id){
-        Menu menu = menuRepository.findById(id).get();
+    public MenuJson getMenu(Long cafeId) {
+        Menu menu = menuRepository.findByCafeId(cafeId);
         MenuJson menuJson = new MenuJson();
-        BeanUtils.copyProperties(menuJson,menu);
+        BeanUtils.copyProperties(menu, menuJson);
         return menuJson;
     }
 
